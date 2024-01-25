@@ -4,16 +4,25 @@ pipeline {
         stage ('compile/test') {
             steps {
                 withMaven(globalMavenSettingsConfig: 'ae44f8b3-3bf7-4624-8e87-74659f3f817f', maven: 'maven393', mavenSettingsConfig: '', traceability: true) {
-                    sh "mvn clean install"
+                    sh "mvn clean package"
                 }
             }
         }
-        stage ('deploy docker image') {
+        stage ('build/push docker image') {
             steps {
                 withMaven(globalMavenSettingsConfig: 'ae44f8b3-3bf7-4624-8e87-74659f3f817f', maven: 'maven393', mavenSettingsConfig: '', traceability: true) {
-                    sh "mvn deploy -DskipTests"
+                    sh "mvn install -DskipTests"
+                }
+                withDockerRegistry(credentialsId: 'ff14fbff-2a2b-4999-9979-1e31dbdf2786', url: 'http://10.10.60.55:1111') {
+                    sh "docker tag myregsistry:8081/myproject/tomcat 10.10.60.55:1111/myproject/tomcat"
+                    sh "docker push 10.10.60.55:1111/myproject/tomcat"
                 }
             }
+        }
+    }
+    post {
+        success {
+            cleanWs cleanWhenAborted: false, cleanWhenFailure: false, cleanWhenNotBuilt: false, cleanWhenUnstable: false
         }
     }
 }

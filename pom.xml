@@ -29,6 +29,13 @@
     </dependency>
   </dependencies>
 
+  <distributionManagement>
+    <repository>
+      <id>internal.repo</id>
+      <url>http://10.10.60.55:8081/repository/jenkins-snapshots</url>
+    </repository>
+  </distributionManagement>
+
   <build>
     <directory>${buildDirectory}</directory>
     <finalName>SimpleWebApp</finalName>
@@ -72,7 +79,7 @@
           <version>3.1.0</version>
           <executions>
               <execution>
-                  <phase>package</phase>
+                  <phase>install</phase>
                   <goals>
                       <goal>exec</goal>
                   </goals>
