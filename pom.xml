@@ -4,7 +4,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>training.coba.com</groupId>
+  <groupId>training.jenkins.com</groupId>
   <artifactId>SimpleWebApp</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>war</packaging>
@@ -65,5 +65,29 @@
         </plugin>
       </plugins>
     </pluginManagement>
+    <plugins>
+      <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <version>3.1.0</version>
+          <executions>
+              <execution>
+                  <phase>package</phase>
+                  <goals>
+                      <goal>exec</goal>
+                  </goals>
+              </execution>
+          </executions>
+          <configuration>
+              <executable>docker</executable>
+            <arguments>
+              <argument>build</argument>
+              <argument>--tag</argument>
+              <argument>myregsistry:8081/myproject/tomcat</argument>
+              <argument>.</argument>
+          </arguments>
+          </configuration>
+      </plugin>
+    </plugins>
   </build>
 </project>
