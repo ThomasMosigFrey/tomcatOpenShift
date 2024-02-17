@@ -32,7 +32,7 @@
   <distributionManagement>
     <repository>
       <id>internal.repo</id>
-      <url>http://10.10.60.55:8081/repository/jenkins-snapshots</url>
+      <url>http://10.10.60.63:8081/repository/jenkins-snapshots</url>
     </repository>
   </distributionManagement>
 
