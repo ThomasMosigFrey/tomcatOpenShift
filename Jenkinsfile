@@ -23,7 +23,7 @@ pipeline {
     post {
         success {
             cleanWs cleanWhenAborted: false, cleanWhenFailure: false, cleanWhenNotBuilt: false, cleanWhenUnstable: false
-            emailext attachLog: true, body: '', compressLog: true, recipientProviders: [upstreamDevelopers()], subject: 'Wir haben ein Problem', to: 'thomas@mosig-frey.de'
+            emailext attachLog: true, body: '', compressLog: true, recipientProviders: [upstreamDevelopers()], subject: 'Wir haben ein Problem ${env.JOB_NAME}', to: 'thomas@mosig-frey.de'
         }
     }
 }
