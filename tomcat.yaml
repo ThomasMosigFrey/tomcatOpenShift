@@ -1,0 +1,74 @@
+apiVersion: v1
+items:
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      labels:
+        app: tomcat
+        app.kubernetes.io/component: tomcat
+        app.kubernetes.io/instance: tomcat
+      name: tomcat
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          deployment: tomcat
+      strategy: { }
+      template:
+        metadata:
+          annotations:
+            openshift.io/generated-by: OpenShiftNewApp
+          labels:
+            deployment: tomcat
+        spec:
+          containers:
+            - image: 'default-route-openshift-image-registry.apps.rm2.thpm.p1.openshiftapps.com/mosigfrey-dev/tomcat:1.0-SNAPSHOT_multi'
+              name: tomcat
+              ports:
+                - containerPort: 8080
+                  protocol: TCP
+              resources: { }
+    status: { }
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+      labels:
+        app: tomcat
+        app.kubernetes.io/component: tomcat
+        app.kubernetes.io/instance: tomcat
+      name: tomcat
+    spec:
+      ports:
+        - name: 8080-tcp
+          port: 8080
+          protocol: TCP
+          targetPort: 8080
+      selector:
+        deployment: tomcat
+    status:
+      loadBalancer: { }
+
+  - apiVersion: route.openshift.io/v1
+    kind: Route
+    metadata:
+      annotations:
+        openshift.io/host.generated: "true"
+      creationTimestamp: "2026-04-06T13:00:20Z"
+      generation: 1
+      name: tomcat
+      namespace: mosigfrey-dev
+      resourceVersion: "5278374251"
+      uid: 1052e144-1dbf-4583-8ed7-031490993f83
+    spec:
+      host: tomcat-mosigfrey-dev.apps.rm2.thpm.p1.openshiftapps.com
+      to:
+        kind: Service
+        name: tomcat
+        weight: 100
+      wildcardPolicy: None
+
+kind: List
+metadata: { }
+

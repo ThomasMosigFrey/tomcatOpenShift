@@ -1,11 +1,11 @@
-FROM docker.io/tomcat@sha256:37557787b2f1b2fc0ecdbbd9281311fbe534587d09df58aa690018172fe840d3
+FROM tomcat:9.0
 
 # setting up image
 RUN echo building tomcat image
 RUN apt-get update && apt-get install -y iputils-ping curl
 
+RUN rm -r /usr/local/tomcat/webapps /usr/local/tomcat/webapps.dist/ROOT
+RUN mv /usr/local/tomcat/webapps.dist /usr/local/tomcat/webapps
 COPY deployment/SimpleWebApp.war /usr/local/tomcat/webapps/ROOT.war
-
-RUN echo "sleep 60; exit 1" >> /usr/local/tomcat/bin/startup.sh
-CMD /usr/local/tomcat/bin/startup.sh
-
+RUN chmod -R ugo+rwx /usr/local/tomcat
+CMD  [ "bash", "-c", "/usr/local/tomcat/bin/catalina.sh run"]
