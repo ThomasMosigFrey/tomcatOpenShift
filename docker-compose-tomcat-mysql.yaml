@@ -1,5 +1,12 @@
-services:
+networks:
+  default:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.90.0.0/24
+          gateway: 10.90.0.1
 
+services:
   mysql:
     image: docker.io/mysql:latest
     container_name: mysql
@@ -10,7 +17,7 @@ services:
       MYSQL_USER: example_db_user
       MYSQL_PASSWORD: example_db_pass
     networks:
-      tomcat:
+      default:
         ipv4_address: 10.90.0.1
   
   web1:
@@ -25,7 +32,7 @@ services:
       - "8085:8080"
       - "5109:5005"
     networks:
-      tomcat:
+      default:
         ipv4_address: 10.90.0.7
     volumes:
       - /Users/thomas/IdeaProjects/tomcatOpenShift/logs:/usr/local/tomcat/logs/
@@ -40,7 +47,7 @@ services:
     ports:
       - "8086:8080"
     networks:
-      tomcat:
+      default:
         ipv4_address: 10.90.0.6
 
   web3:
@@ -51,15 +58,7 @@ services:
       JDBC_USER: example_db_user
       JDBC_PASS: example_db_pass
     ports:
-      - "8087:8080"#
+      - "8087:8080"
     networks:
-      tomcat:
+      default:
         ipv4_address: 10.90.0.5
-
-networks:
-  tomcat:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 10.90.0.0/24
-          gateway: 10.90.0.1
