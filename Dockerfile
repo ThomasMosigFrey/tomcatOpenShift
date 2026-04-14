@@ -3,6 +3,7 @@ FROM tomcat:9.0
 # setting up image
 RUN echo building tomcat image
 RUN apt-get update && apt-get install -y iputils-ping curl
+COPY deployment/SimpleWebApp.war /usr/local/tomcat/webapps/ROOT.war
 
 RUN rm -r /usr/local/tomcat/webapps /usr/local/tomcat/webapps.dist/ROOT
 RUN mv /usr/local/tomcat/webapps.dist /usr/local/tomcat/webapps

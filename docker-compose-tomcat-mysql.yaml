@@ -3,20 +3,42 @@ services:
   mysql:
     image: docker.io/mysql:latest
     container_name: mysql
+    hostname: mysql_server
     environment:
       MYSQL_ROOT_PASSWORD: nimda
       MYSQL_DATABASE: example_db
       MYSQL_USER: example_db_user
       MYSQL_PASSWORD: example_db_pass
   
-  web:
+  web1:
     image: tomcat:9.0
-    container_name: tomcat
+    container_name: tomcat1
+    hostname: tomcat_primary
     environment:
-      JDBC_URL: jdbc:mysql://mysql:3306/example_db?connectTimeout=0&amp;socketTimeout=0&amp;autoReconnect=true
+      JDBC_URL: jdbc:mysql://mysql_server:3306/example_db?connectTimeout=0&amp;socketTimeout=0&amp;autoReconnect=true
       JDBC_USER: example_db_user
       JDBC_PASS: example_db_pass
     ports:
       - "8085:8080"
-    links:
-      - mysql
+      - "5109:5009"
+
+  web2:
+    image: tomcat:9.0
+    container_name: tomcat2
+    environment:
+      JDBC_URL: jdbc:mysql://mysql_server:3306/example_db?connectTimeout=0&amp;socketTimeout=0&amp;autoReconnect=true
+      JDBC_USER: example_db_user
+      JDBC_PASS: example_db_pass
+    ports:
+      - "8086:8080"
+
+
+  web3:
+    image: tomcat:9.0
+    container_name: tomcat3
+    environment:
+      JDBC_URL: jdbc:mysql://mysql_server:3306/example_db?connectTimeout=0&amp;socketTimeout=0&amp;autoReconnect=true
+      JDBC_USER: example_db_user
+      JDBC_PASS: example_db_pass
+    ports:
+      - "8087:8080"

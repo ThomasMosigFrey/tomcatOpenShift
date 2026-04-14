@@ -97,10 +97,12 @@
                             <executable>podman</executable>
                             <arguments>
                                 <argument>build</argument>
+
                                 <argument>--platform</argument>
                                 <argument>linux/amd64,linux/arm64</argument>
                                 <argument>--manifest</argument>
                                 <argument>${docker-registry}/${namespace}/tomcat:${project.version}</argument>
+
                                 <argument>--tag</argument>
                                 <argument>${docker-registry}/${namespace}/tomcat:${project.version}_multi</argument>
                                 <argument>.</argument>
