@@ -35,7 +35,7 @@ services:
       default:
         ipv4_address: 10.90.0.7
     volumes:
-      - /Users/thomas/IdeaProjects/tomcatOpenShift/logs:/usr/local/tomcat/logs/
+      - /Users/thomas/IdeaProjects/tomcatOpenShift/logs/:/usr/local/tomcat/logs/
 
   web2:
     image: tomcat:9.0

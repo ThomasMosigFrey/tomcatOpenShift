@@ -1,0 +1,21 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+{{- include "wildfly.labels" . | nindent 4 }}
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+{{- end }}
+spec:
+  host: {{ .Release.Name }}-mosigfrey-dev.apps.rm2.thpm.p1.openshiftapps.com
+  path: /
+  to:
+    kind: Service
+    name: {{ .Release.Name }}
+    weight: 100
+  port:
+    targetPort: {{ .Values.service.port }} 
+  wildcardPolicy: None
+
