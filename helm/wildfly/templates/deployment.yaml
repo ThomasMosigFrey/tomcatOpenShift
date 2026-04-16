@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "wildfly.fullname" . }}
+  name: {{ .Release.Name }}
   labels:
     {{- include "wildfly.labels" . | nindent 4 }}
 spec:
