@@ -1,4 +1,4 @@
-FROM tomcat:9.0
+FROM docker.io/tomcat:10
 
 # setting up image
 RUN echo building tomcat image
@@ -11,3 +11,4 @@ COPY deployment/SimpleWebApp.war /usr/local/tomcat/webapps/ROOT.war
 RUN chgrp -R 0 /usr/local/tomcat/ && \
     chmod -R g=u,g+w /usr/local/tomcat/
 CMD  [ "bash", "-c", "/usr/local/tomcat/bin/catalina.sh run"]
+
