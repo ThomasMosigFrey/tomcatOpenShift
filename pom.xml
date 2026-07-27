@@ -72,73 +72,16 @@
                 <version>3.1.0</version>
                 <executions>
                     <execution>
-                        <id>manifest</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>podman</executable>
-                            <arguments>
-                                <argument>manifest</argument>
-                                <argument>create</argument>
-                                <argument>--amend</argument>
-                                <argument>${docker-registry}/${namespace}/tomcat:${project.version}</argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
-                    <execution>
                         <id>build</id>
                         <phase>package</phase>
                         <goals>
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <executable>podman</executable>
+                            <executable>docker</executable>
                             <arguments>
                                 <argument>build</argument>
-
-                                <argument>--platform</argument>
-                                <argument>linux/amd64,linux/arm64</argument>
-                                <argument>--manifest</argument>
-                                <argument>${docker-registry}/${namespace}/tomcat:${project.version}</argument>
-
-                                <argument>--tag</argument>
-                                <argument>${docker-registry}/${namespace}/tomcat:${project.version}_multi</argument>
                                 <argument>.</argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>push-manifest</id>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>podman</executable>
-                            <arguments>
-                                <argument>manifest</argument>
-                                <argument>push</argument>
-                                <argument>--creds</argument>
-                                <argument>${username}:${password}</argument>
-                                <argument>${docker-registry}/${namespace}/tomcat:${project.version}</argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>push-image</id>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>podman</executable>
-                            <arguments>
-                                <argument>push</argument>
-                                <argument>--creds</argument>
-                                <argument>${username}:${password}</argument>
-                                <argument>${docker-registry}/${namespace}/tomcat:${project.version}_multi</argument>
                             </arguments>
                         </configuration>
                     </execution>
