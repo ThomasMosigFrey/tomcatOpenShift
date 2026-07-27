@@ -4,7 +4,7 @@ pipeline {
         stage ('compile/test') {
             steps {
                 withMaven(globalMavenSettingsConfig: 'globalMavenSettingsConfig', mavanLocalRepo: '.repository', maven: 'maven3', traceability: true) {
-                    sh "mvn clean test"
+                    sh "mvn clean install"
                 }
             }
         }
